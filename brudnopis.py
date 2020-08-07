@@ -1,4 +1,3 @@
-
 my_dict = {1: "barszcz", 2: "ogurkowa", 3: "rzurek"}
 
 print(my_dict.items())
@@ -26,5 +25,4 @@ print(middle_third)
 squares = [x ** 2 for x in range(1, 11)]
 print(squares)
 
-filtered = (filter(lambda x: x in range(30, 71), squares))
-print(filtered)
+print(filter(lambda x: x in range(30, 71), squares))
