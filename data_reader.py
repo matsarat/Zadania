@@ -23,3 +23,12 @@ class DataReader(object):
             columns = line.split(separator)
             table.append(list(map(int, columns)))
         return table
+
+    def get_table_float(self, separator):
+        table = []
+        for index in range(1, len(self.lines)):
+            line = self.lines[index]
+            columns = line.split(separator)
+            table.append(list(map(float, columns)))
+        return table
+
