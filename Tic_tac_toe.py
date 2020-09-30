@@ -46,14 +46,15 @@ def horizontal_or_vertical_win(array, number_of_winning_marks):
                 X_count = 0
     return X_count == number_of_winning_marks or O_count == number_of_winning_marks
 
+
 def diagonal_win(number_of_winning_marks, board):
-    for diagonal in get_all_diagonal_coordinates(number_of_rows, number_of_columns):
-        X_count = 0
-        O_count = 0
-        for coordinate in diagonal:
-            mark = board[coordinate[0]][coordinate[1]]
-            if X_count < number_of_winning_marks or O_count < number_of_winning_marks:
-                for mark in diagonal:
+    for list_of_diagonals in get_all_reverse_diagonal_coordinates(number_of_rows, number_of_columns):
+        for diagonal in list_of_diagonals:
+            X_count = 0
+            O_count = 0
+            for coordinate in diagonal:
+                mark = board[coordinate[0]][coordinate[1]]
+                if X_count < number_of_winning_marks or O_count < number_of_winning_marks:
                     if mark == "X":
                         X_count += 1
                     elif mark == "O":
@@ -63,14 +64,15 @@ def diagonal_win(number_of_winning_marks, board):
                         O_count = 0
     return X_count == number_of_winning_marks or O_count == number_of_winning_marks
 
+
 def reverse_diagonal_win(number_of_winning_marks, board):
-    for reverse_diagonal in get_all_reverse_diagonal_coordinates(number_of_rows, number_of_columns):
-        X_count = 0
-        O_count = 0
-        for coordinate in reverse_diagonal:
-            mark = board[coordinate[0][coordinate[1]]]
-            if X_count < number_of_winning_marks or O_count < number_of_winning_marks:
-                for mark in reverse_diagonal:
+    for list_of_reverse_diagonals in get_all_reverse_diagonal_coordinates(number_of_rows, number_of_columns):
+        for reverse_diagonal in list_of_reverse_diagonals:
+            X_count = 0
+            O_count = 0
+            for coordinate in reverse_diagonal:
+                mark = board[coordinate[0][coordinate[1]]]
+                if X_count < number_of_winning_marks or O_count < number_of_winning_marks:
                     if mark == "X":
                         X_count += 1
                     elif mark == "O":
@@ -157,6 +159,7 @@ def is_winner(board, number_of_winning_marks):
 
 
 def game():
+
     board = create_board(number_of_rows, number_of_columns)
     players = create_players()
     while not is_winner(board, number_of_winning_marks):
@@ -165,10 +168,10 @@ def game():
             coordinates = get_validated_coordinates(player, board, number_of_rows, number_of_columns)
             mark_board_with_player_move(coordinates, player, board)
 
-
 number_of_rows = 4
 number_of_columns = 4
 number_of_winning_marks = 3
+
 game()
 #board = create_board(number_of_rows, number_of_columns)
 # get_diagonal_coordinates(board, 0, 0, number_of_rows)
