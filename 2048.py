@@ -98,6 +98,8 @@ def move_left(board):
     print_board(board)
     return board
 
+move_left(board)
+
 def move_up(board):
     for column in get_columns(board) :
         while not_sorted_move_left_and_up(column):
@@ -105,20 +107,14 @@ def move_up(board):
     print_board(board)
     return board
 
-move_left(board)
+move_up(board)
 
-def not_sorted_move_right(row):
+
+def not_sorted_move_right_and_down(row):
     for index in range(len(row) - 1, 0, -1):
         while row[index].value == 0 and row[index - 1].value > 0:
             return True
     return False
-
-def move_right(board):
-    for row in board:
-        while not_sorted_move_right(row):
-            right_and_down_sort(row)
-    print_board(board)
-    return board
 
 
 def right_and_down_sort(array):
@@ -129,7 +125,26 @@ def right_and_down_sort(array):
             array[index - 1].value = temp_index
             array[index].value = temp_index_minus_one
 
+def move_right(board):
+    for row in board:
+        while not_sorted_move_right_and_down(row):
+            right_and_down_sort(row)
+    print_board(board)
+    return board
 
 move_right(board)
+
+def move_down(board):
+    for column in get_columns(board):
+        while not_sorted_move_right_and_down(column):
+            right_and_down_sort(column)
+    print_board(board)
+    return board
+
+move_down(board)
+
+
+
+
 
 
