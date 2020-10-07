@@ -20,8 +20,8 @@ def create_board(number_of_rows, number_of_columns):
 def print_board(board):
     for row in board:
         print("  ".join(str(field) for field in row))
-        
-        
+
+
 def get_number_of_rows(board):
     return len(board)
 
@@ -144,7 +144,14 @@ def move_down(board):
 move_down(board)
 
 
+def sum_right(board):
+    for row in board:
+        for index in range(0, len(row) - 1):
+            if row[index].value == row[index + 1].value:
+                row[index + 1].value += row[index].value
+                row[index].value = 0
+    print_board(board)
+    return board
 
 
-
-
+sum_right(board)
