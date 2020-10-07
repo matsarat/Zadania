@@ -108,8 +108,6 @@ def move_up(board):
     return board
 
 
-
-
 def not_sorted_move_right_and_down(row):
     for index in range(len(row) - 1, 0, -1):
         while row[index].value == 0 and row[index - 1].value > 0:
@@ -191,12 +189,13 @@ def place_next_element_on_board(board):
         place_next_element_on_board(board)
 
 
-"""
-
 def game_over(board):
     winning_number = 2048
     for row in board:
         if winning_number in row:
             print("You did it!")
             return True
-"""
+    for row in board:
+        if 0 in row:
+            return False
+
