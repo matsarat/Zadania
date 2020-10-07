@@ -178,4 +178,25 @@ def sum_up(board):
     print_board(board)
     return board
 
+def place_next_element_on_board(board):
+    next_element_value = 2
+    number_of_rows = get_number_of_rows(board)
+    number_of_columns = get_number_of_columns(board)
 
+    row_number = get_random_number(number_of_rows)
+    column_number = get_random_number(number_of_columns)
+    if board[row_number][column_number].value == 0:
+        board[row_number][column_number].value = next_element_value
+    else:
+        place_next_element_on_board(board)
+
+
+"""
+
+def game_over(board):
+    winning_number = 2048
+    for row in board:
+        if winning_number in row:
+            print("You did it!")
+            return True
+"""
