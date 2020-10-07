@@ -98,7 +98,7 @@ def move_left(board):
     print_board(board)
     return board
 
-move_left(board)
+
 
 def move_up(board):
     for column in get_columns(board) :
@@ -107,7 +107,7 @@ def move_up(board):
     print_board(board)
     return board
 
-move_up(board)
+
 
 
 def not_sorted_move_right_and_down(row):
@@ -132,7 +132,6 @@ def move_right(board):
     print_board(board)
     return board
 
-move_right(board)
 
 def move_down(board):
     for column in get_columns(board):
@@ -141,17 +140,42 @@ def move_down(board):
     print_board(board)
     return board
 
-move_down(board)
 
+
+def right_or_down_sum(array):
+    for index in range(0, len(array) - 1):
+        if array[index].value == array[index + 1].value:
+            array[index + 1].value += array[index].value
+            array[index].value = 0
 
 def sum_right(board):
     for row in board:
-        for index in range(0, len(row) - 1):
-            if row[index].value == row[index + 1].value:
-                row[index + 1].value += row[index].value
-                row[index].value = 0
+        right_or_down_sum(row)
+    print_board(board)
+    return board
+
+def sum_down(board):
+    for column in get_columns(board):
+        right_or_down_sum(column)
+    print_board(board)
+    return board
+
+def left_or_up_sum(array):
+    for index in range (len(array) -1, 0, -1):
+        if array[index].value == array[index - 1].value:
+            array[index -1].value += array[index].value
+            array[index].value = 0
+
+def sum_left(board):
+    for row in board:
+        left_or_up_sum(row)
+    print_board(board)
+    return board
+
+def sum_up(board):
+    for column in get_columns(board):
+        left_or_up_sum(column)
     print_board(board)
     return board
 
 
-sum_right(board)
