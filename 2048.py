@@ -51,19 +51,14 @@ def instructions():
 
 def place_two_initial_elements_on_board(board):
     initial_element_value = 2
-    number_of_rows = get_number_of_rows(board)
-    number_of_columns = get_number_of_columns(board)
+    get_fields_with_zero_value(board)
 
-    first_row_number = get_random_number(number_of_rows)
-    first_column_number = get_random_number(number_of_columns)
-    board[first_row_number][first_column_number].value = initial_element_value
+    first_initial_element = random.choice(get_fields_with_zero_value(board))
+    first_initial_element.value = initial_element_value
 
-    second_row_number = get_random_number(number_of_rows)
-    second_column_number = get_random_number(number_of_columns)
-    while second_row_number == first_row_number and second_column_number == first_column_number:
-        second_row_number = get_random_number(number_of_rows)
-        second_column_number = get_random_number(number_of_columns)
-    board[second_row_number][second_column_number].value = initial_element_value
+    get_fields_with_zero_value(board)
+    second_initial_element = random.choice(get_fields_with_zero_value(board))
+    second_initial_element.value = initial_element_value
 
 
 def get_random_number(max_range):
@@ -180,7 +175,7 @@ def place_next_element_on_board(board):
     next_field.value = 2
 
 
-def game_over(board, fields_with_zero_value):
+def game_over(board):
     winning_number = 2048
     for row in board:
         if winning_number in row:
@@ -190,7 +185,7 @@ def game_over(board, fields_with_zero_value):
         for index in range(0, len(row)):
             if row[index].value == 0:
                 return False
-    if fields_with_zero_value in get_fields_with_zero_value(board) == []:
+    if len(get_fields_with_zero_value(board)) == 0:
         print("YOU LOST!")
         return True
 
@@ -220,12 +215,11 @@ def game(number_of_rows, number_of_columns):
     instructions()
     place_two_initial_elements_on_board(board)
     print_board(board)
-    fields_with_zero_value = get_fields_with_zero_value(board)
-    while game_over(board, fields_with_zero_value) == False:
+    while game_over(board) == False:
         valid_players_move(board)
         get_fields_with_zero_value(board)
-        game_over(board, fields_with_zero_value)
+        game_over(board)
         place_next_element_on_board(board)
         print_board(board)
 
-game(4, 4)
+game(2, 2)
