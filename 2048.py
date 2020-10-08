@@ -127,8 +127,8 @@ def move_down(board):
 def right_or_down_sum(array):
     for index in range(len(array) - 1, 0, -1):
         if array[index].value == array[index - 1].value:
-            array[index - 1].value += array[index].value
-            array[index].value = 0
+            array[index].value += array[index - 1].value
+            array[index - 1].value = 0
 
 
 def sum_right(board):
@@ -146,8 +146,8 @@ def sum_down(board):
 def left_or_up_sum(array):
     for index in range(0, len(array) - 1):
         if array[index].value == array[index + 1].value:
-            array[index + 1].value += array[index].value
-            array[index].value = 0
+            array[index].value += array[index + 1].value
+            array[index + 1].value = 0
 
 
 def sum_left(board):
