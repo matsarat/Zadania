@@ -181,10 +181,8 @@ def game_over(board):
         if winning_number in row:
             print("You did it!")
             return True
-    for row in board:
-        for index in range(0, len(row)):
-            if row[index].value == 0:
-                return False
+    if len(get_fields_with_zero_value(board)) > 0:
+        return False
     if len(get_fields_with_zero_value(board)) == 0:
         print("YOU LOST!")
         return True
