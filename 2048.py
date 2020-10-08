@@ -215,8 +215,6 @@ def game(number_of_rows, number_of_columns):
     print_board(board)
     while game_over(board) == False:
         valid_players_move(board)
-        get_fields_with_zero_value(board)
-        game_over(board)
         place_next_element_on_board(board)
         print_board(board)
 
