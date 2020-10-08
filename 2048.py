@@ -89,7 +89,6 @@ def move_left(board):
     for row in board:
         while not_sorted_move_left_and_up(row):
             left_and_up_sort(row)
-    print_board(board)
     return board
 
 
@@ -97,7 +96,6 @@ def move_up(board):
     for column in get_columns(board) :
         while not_sorted_move_left_and_up(column):
             left_and_up_sort(column)
-    print_board(board)
     return board
 
 
@@ -121,7 +119,6 @@ def move_right(board):
     for row in board:
         while not_sorted_move_right_and_down(row):
             right_and_down_sort(row)
-    print_board(board)
     return board
 
 
@@ -129,7 +126,6 @@ def move_down(board):
     for column in get_columns(board):
         while not_sorted_move_right_and_down(column):
             right_and_down_sort(column)
-    print_board(board)
     return board
 
 
@@ -143,14 +139,12 @@ def right_or_down_sum(array):
 def sum_right(board):
     for row in board:
         right_or_down_sum(row)
-    print_board(board)
     return board
 
 
 def sum_down(board):
     for column in get_columns(board):
         right_or_down_sum(column)
-    print_board(board)
     return board
 
 
@@ -164,31 +158,29 @@ def left_or_up_sum(array):
 def sum_left(board):
     for row in board:
         left_or_up_sum(row)
-    print_board(board)
     return board
 
 
 def sum_up(board):
     for column in get_columns(board):
         left_or_up_sum(column)
-    print_board(board)
     return board
 
 
+def get_fields_with_zero_value(board):
+    fields_with_zero_value = []
+    for row in board:
+        for field in row:
+            if field.value == 0:
+                fields_with_zero_value.append(field)
+    return fields_with_zero_value
+
 def place_next_element_on_board(board):
-    next_element_value = 2
-    number_of_rows = get_number_of_rows(board)
-    number_of_columns = get_number_of_columns(board)
-
-    row_number = get_random_number(number_of_rows)
-    column_number = get_random_number(number_of_columns)
-    if board[row_number][column_number].value == 0:
-        board[row_number][column_number].value = next_element_value
-    else:
-        place_next_element_on_board(board)
+    next_field = random.choice(get_fields_with_zero_value(board))
+    next_field.value = 2
 
 
-def game_over(board):
+def game_over(board, fields_with_zero_value):
     winning_number = 2048
     for row in board:
         if winning_number in row:
@@ -198,6 +190,9 @@ def game_over(board):
         for index in range(0, len(row)):
             if row[index].value == 0:
                 return False
+    if fields_with_zero_value in get_fields_with_zero_value(board) == []:
+        print("YOU LOST!")
+        return True
 
 
 def valid_players_move(board):
@@ -218,7 +213,19 @@ def valid_players_move(board):
         move_down(board)
         sum_down(board)
         move_down(board)
-    else:
-        print("Insert valid move!")
-        valid_players_move(board)
 
+
+def game(number_of_rows, number_of_columns):
+    board = create_board(number_of_rows, number_of_columns)
+    instructions()
+    place_two_initial_elements_on_board(board)
+    print_board(board)
+    fields_with_zero_value = get_fields_with_zero_value(board)
+    while game_over(board, fields_with_zero_value) == False:
+        valid_players_move(board)
+        get_fields_with_zero_value(board)
+        game_over(board, fields_with_zero_value)
+        place_next_element_on_board(board)
+        print_board(board)
+
+game(4, 4)
