@@ -70,11 +70,6 @@ def get_random_number(max_range):
     return random.randint(0, max_range - 1)
 
 
-board = create_board(4, 4)
-place_two_initial_elements_on_board(board)
-print_board(board)
-
-
 def not_sorted_move_left_and_up(array):
     for index in range(0, len(array) - 1):
         while array[index].value == 0 and array[index + 1].value > 0:
@@ -90,14 +85,12 @@ def left_and_up_sort(array):
             array[index + 1].value = temp_index
 
 
-
 def move_left(board):
     for row in board:
         while not_sorted_move_left_and_up(row):
             left_and_up_sort(row)
     print_board(board)
     return board
-
 
 
 def move_up(board):
@@ -123,6 +116,7 @@ def right_and_down_sort(array):
             array[index - 1].value = temp_index
             array[index].value = temp_index_minus_one
 
+
 def move_right(board):
     for row in board:
         while not_sorted_move_right_and_down(row):
@@ -139,12 +133,12 @@ def move_down(board):
     return board
 
 
-
 def right_or_down_sum(array):
     for index in range(0, len(array) - 1):
         if array[index].value == array[index + 1].value:
             array[index + 1].value += array[index].value
             array[index].value = 0
+
 
 def sum_right(board):
     for row in board:
@@ -152,11 +146,13 @@ def sum_right(board):
     print_board(board)
     return board
 
+
 def sum_down(board):
     for column in get_columns(board):
         right_or_down_sum(column)
     print_board(board)
     return board
+
 
 def left_or_up_sum(array):
     for index in range (len(array) -1, 0, -1):
@@ -164,17 +160,20 @@ def left_or_up_sum(array):
             array[index -1].value += array[index].value
             array[index].value = 0
 
+
 def sum_left(board):
     for row in board:
         left_or_up_sum(row)
     print_board(board)
     return board
 
+
 def sum_up(board):
     for column in get_columns(board):
         left_or_up_sum(column)
     print_board(board)
     return board
+
 
 def place_next_element_on_board(board):
     next_element_value = 2
@@ -196,6 +195,30 @@ def game_over(board):
             print("You did it!")
             return True
     for row in board:
-        if 0 in row:
-            return False
+        for index in range(0, len(row)):
+            if row[index].value == 0:
+                return False
+
+
+def valid_players_move(board):
+    players_move = str(input("Next move: ").lower())
+    if players_move == "a":
+        move_left(board)
+        sum_left(board)
+        move_left(board)
+    elif players_move == "w":
+        move_up(board)
+        sum_up(board)
+        move_up(board)
+    elif players_move == "d":
+        move_right(board)
+        sum_right(board)
+        move_right(board)
+    elif players_move == "s":
+        move_down(board)
+        sum_down(board)
+        move_down(board)
+    else:
+        print("Insert valid move!")
+        valid_players_move(board)
 
