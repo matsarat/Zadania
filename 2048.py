@@ -232,6 +232,7 @@ def game(number_of_rows, number_of_columns):
         valid_players_move(board)
         if check_if_won(board) == True:
             print("You did it!")
+            print_board(board)
             break
         place_next_element_on_board(board)
         print_board(board)
