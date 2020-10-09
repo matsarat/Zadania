@@ -191,14 +191,17 @@ def check_if_similar_neighboring(board):
 
 
 def game_over(board):
-    winning_number = 2048
-    for row in board:
-        if winning_number in row:
-            print("You did it!")
-            return True
     if len(get_fields_with_zero_value(board)) > 0:
         return False
 
+
+def check_if_won(board):
+    winning_number = 16
+    for row in board:
+        for field in row:
+            if field.value == winning_number:
+                return True
+    return False
 
 def valid_players_move(board):
     players_move = str(input("Next move: ").lower())
@@ -227,6 +230,9 @@ def game(number_of_rows, number_of_columns):
     print_board(board)
     while game_over(board) == False or check_if_similar_neighboring(board) == True:
         valid_players_move(board)
+        if check_if_won(board) == True:
+            print("You did it!")
+            break
         place_next_element_on_board(board)
         print_board(board)
 
