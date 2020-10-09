@@ -56,7 +56,6 @@ def place_two_initial_elements_on_board(board):
     first_initial_element = random.choice(get_fields_with_zero_value(board))
     first_initial_element.value = initial_element_value
 
-    get_fields_with_zero_value(board)
     second_initial_element = random.choice(get_fields_with_zero_value(board))
     second_initial_element.value = initial_element_value
 
@@ -171,8 +170,24 @@ def get_fields_with_zero_value(board):
     return fields_with_zero_value
 
 def place_next_element_on_board(board):
-    next_field = random.choice(get_fields_with_zero_value(board))
-    next_field.value = 2
+    if len(get_fields_with_zero_value(board)) > 0:
+        next_field = random.choice(get_fields_with_zero_value(board))
+        next_field.value = 2
+    else:
+        print("No more space on the board. You lost!")
+
+
+def check_if_similar_neighboring(board):
+    for row in board:
+        for index in range(0, len(row)-1):
+            if row[index].value == row[index + 1].value:
+                return True
+    for column in get_columns(board):
+        for index in range(0, len(column)-1):
+            if column[index].value == column[index + 1].value:
+                return True
+    return False
+
 
 
 def game_over(board):
@@ -183,9 +198,6 @@ def game_over(board):
             return True
     if len(get_fields_with_zero_value(board)) > 0:
         return False
-    if len(get_fields_with_zero_value(board)) == 0:
-        print("YOU LOST!")
-        return True
 
 
 def valid_players_move(board):
@@ -213,9 +225,9 @@ def game(number_of_rows, number_of_columns):
     instructions()
     place_two_initial_elements_on_board(board)
     print_board(board)
-    while game_over(board) == False:
+    while game_over(board) == False or check_if_similar_neighboring(board) == True:
         valid_players_move(board)
         place_next_element_on_board(board)
         print_board(board)
 
-game(4, 4)
+game(2, 2)
