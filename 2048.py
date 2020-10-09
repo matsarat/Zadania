@@ -203,24 +203,60 @@ def check_if_won(board):
                 return True
     return False
 
-def valid_players_move(board):
+
+def get_temporary_board_values(board):
+    temporary_board_values = []
+    for row in board:
+        for field in row:
+            temporary_board_values.append(field.value)
+    return temporary_board_values
+
+def get_board_values(board):
+    board_values = []
+    for row in board:
+        for field in row:
+            board_values.append(field.value)
+    return board_values
+
+def validate_players_move(board):
+    temporary_values_board = get_temporary_board_values(board)
     players_move = str(input("Next move: ").lower())
     if players_move == "a":
         move_left(board)
         sum_left(board)
         move_left(board)
+        values_board = get_board_values(board)
+        if temporary_values_board == values_board:
+            print("INVALID MOVE!")
+        else:
+            place_next_element_on_board(board)
     elif players_move == "w":
         move_up(board)
         sum_up(board)
         move_up(board)
+        values_board = get_board_values(board)
+        if temporary_values_board == values_board:
+            print("INVALID MOVE!")
+        else:
+            place_next_element_on_board(board)
     elif players_move == "d":
         move_right(board)
         sum_right(board)
         move_right(board)
+        values_board = get_board_values(board)
+        if temporary_values_board == values_board:
+            print("INVALID MOVE!")
+        else:
+            place_next_element_on_board(board)
     elif players_move == "s":
         move_down(board)
         sum_down(board)
         move_down(board)
+        values_board = get_board_values(board)
+        if temporary_values_board == values_board:
+            print("INVALID MOVE!")
+        else:
+            place_next_element_on_board(board)
 
 
 def game(number_of_rows, number_of_columns):
@@ -229,12 +265,11 @@ def game(number_of_rows, number_of_columns):
     place_two_initial_elements_on_board(board)
     print_board(board)
     while game_over(board) == False or check_if_similar_neighboring(board) == True:
-        valid_players_move(board)
+        validate_players_move(board)
         if check_if_won(board) == True:
             print("You did it!")
             print_board(board)
             break
-        place_next_element_on_board(board)
         print_board(board)
 
-game(2, 2)
+game(3, 3)
