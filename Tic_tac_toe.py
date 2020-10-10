@@ -18,12 +18,19 @@ def get_validated_coordinates(player, board, number_of_rows, number_of_columns):
     print("Now plays: " + player)
     input_row = input("Please insert row number: ")
     input_column = input("Please insert column number: ")
+
+    if int(input_row) < 1 or int(input_column) < 1:
+        print("Coordinate must bi greater than 0!")
+        return get_validated_coordinates(player, board, number_of_rows, number_of_columns)
+
     if input_row == "" or input_column == "":
         print("Please insert valid coordinates!")
         return get_validated_coordinates(player, board, number_of_rows, number_of_columns)
+
     move_row = (int(input_row) - 1)
     move_column = (int(input_column) - 1)
     coordinates = [move_row, move_column]
+
     if move_row > (number_of_rows - 1) or move_column > (number_of_columns - 1):
         print("Your move is out of board!")
         return get_validated_coordinates(player, board, number_of_rows, number_of_columns)
@@ -46,6 +53,7 @@ def is_current_player_winner(array, number_of_winning_marks, current_player):
                 return True
         else:
             current_player_marks_count = 0
+    return False
 
 
 def get_diagonal_coordinates(first_column_number, first_row_number, number_of_rows, number_of_columns):
@@ -140,6 +148,14 @@ def game_over(board, number_of_winning_marks, player, number_of_rows, number_of_
     return False
 
 
+def check_if_tie(board):
+    empty_fields_count = 0
+    for row in board:
+        if "#" in row:
+            empty_fields_count += 1
+    return empty_fields_count
+
+
 def game(number_of_rows, number_of_columns, number_of_winning_marks):
     board = create_board(number_of_rows, number_of_columns)
     players = create_players()
@@ -151,9 +167,15 @@ def game(number_of_rows, number_of_columns, number_of_winning_marks):
             mark_board_with_player_move(coordinates, player, board)
             if game_over(board, number_of_winning_marks, player, number_of_rows, number_of_columns):
                 finish_game = True
-                print("You won, " + str(player) + ", you lucky dick!")
+                print("You won, " + str(player) + ", you lucky guy!")
+                print_board(board)
+                break
+            elif check_if_tie(board) == 0:
+                finish_game = True
+                print("It's a tie!")
+                print_board(board)
                 break
 
 
 
-game(4, 4, 3)
+game(3, 3, 3)
