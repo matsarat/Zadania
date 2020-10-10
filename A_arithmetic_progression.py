@@ -4,10 +4,6 @@ data_reader = DataReader("sums_in_loop.txt")
 data = data_reader.get_table_int(" ")
 print(data)
 
-#first value opens the sequence
-#second value is a step
-#third value is a number of iterations
-
 results = []
 for line in data:
     sequence = []
